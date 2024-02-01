@@ -24,11 +24,12 @@ class IdentifyUserMiddleware implements MiddlewareInterface
         }
 
         $access = $handler->get(ID::ACCESS);
-        if (!$access instanceof AuthenticatorInterface) {
+
+        if ($access !== null && !$access instanceof AuthenticatorInterface) {
             throw new UnexpectedValueException('Invalid access authenticator.');
         }
 
-        if ($access->isUser()) {
+        if ($access !== null && $access->isUser()) {
             $user = $access->getUser();
             $user = $user->getData();
 
