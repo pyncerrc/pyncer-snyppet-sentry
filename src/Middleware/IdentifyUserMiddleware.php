@@ -36,7 +36,7 @@ class IdentifyUserMiddleware implements MiddlewareInterface
 
             \Sentry\configureScope(function (\Sentry\State\Scope $scope) use($request, $user): void {
                 $scope->setUser([
-                    'id' => $access->getUserId(),
+                    'id' => $user['id'],
                     'username' => $user['username'] ?? $user['name'],
                     'email' => $user['email'] ?? null,
                     'ip_address' => $request->getServerParams()['REMOTE_ADDR'] ?? null,
