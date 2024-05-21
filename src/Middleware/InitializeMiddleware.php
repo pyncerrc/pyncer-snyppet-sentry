@@ -9,12 +9,49 @@ use Pyncer\Http\Server\RequestHandlerInterface;
 
 class InitializeMiddleware implements MiddlewareInterface
 {
+    protected bool $enabled;
+    protected ?string $dsn;
+    protected string $environment;
+
     public function __construct(
-        protected bool $enabled = false,
-        protected ?string $dsn = null,
-        protected string $environment = 'production',
-    )
-    {}
+        bool $enabled = false,
+        ?string $dsn = null,
+        string $environment = 'production',
+    ) {
+        $this->setEnabled($enabled);
+        $this->setDsn($dsn);
+        $this->setEnvironment($environment);
+    }
+
+    public function getEnabled(): bool
+    {
+        return $this->enabled;
+    }
+    public function setEnabled(bool $value): static
+    {
+        $this->enabled = $value;
+        return $this;
+    }
+
+    public function getDsn(): ?string
+    {
+        return $this->dsn;
+    }
+    public function setDsn(?string $value): static
+    {
+        $this->dsn = $value;
+        return $this;
+    }
+
+    public function getEnvironment(): string
+    {
+        return $this->environment;
+    }
+    public function setEnvironment(string $value): static
+    {
+        $this->environment = $value;
+        return $this;
+    }
 
     public function __invoke(
         PsrServerRequestInterface $request,
@@ -22,13 +59,13 @@ class InitializeMiddleware implements MiddlewareInterface
         RequestHandlerInterface $handler
     ): PsrResponseInterface
     {
-        if (!$this->enabled || $this->dsn === null) {
+        if (!$this->getEnabled() || $this->getDsn() === null) {
             return $handler->next($request, $response);
         }
 
         \Sentry\init([
-            'dsn' => $this->dsn,
-            'environment' => $this->environment,
+            'dsn' => $this->getDsn(),
+            'environment' => $this->getEnvironment(),
             'error_types' => E_ALL
         ]);
 
