@@ -11,9 +11,6 @@ use Pyncer\Http\Server\RequestHandlerInterface;
 
 class IdentifyUserMiddleware implements MiddlewareInterface
 {
-    public function __construct(protected ?string $dsn = null)
-    {}
-
     public function __invoke(
         PsrServerRequestInterface $request,
         PsrResponseInterface $response,
@@ -24,7 +21,11 @@ class IdentifyUserMiddleware implements MiddlewareInterface
             return $handler->next($request, $response);
         }
 
-        $access = $handler->get(ID::ACCESS);
+        if ($handler->has(ID::ACCESS)) {
+            $access = $handler->get(ID::ACCESS);
+        } else {
+            $access = null;
+        }
 
         if ($access !== null && !$access instanceof AuthenticatorInterface) {
             throw new UnexpectedValueException('Invalid access authenticator.');
