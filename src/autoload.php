@@ -6,7 +6,7 @@ SnyppetManager::register(new Snyppet(
     'sentry',
     dirname(__DIR__),
     [
-        'debug' => ['Initialize'],
+        'debug' => ['Initialize', 'InitializeLogger'],
         'access' => ['IdentifyUser'],
     ],
 ));

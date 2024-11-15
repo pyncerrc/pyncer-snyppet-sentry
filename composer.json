@@ -12,7 +12,8 @@
         "pyncer/access": "^1.1.0",
         "pyncer/exception": "^1.0",
         "pyncer/http": "^1.0.3",
-        "pyncer/snyppet": "^1.1.0",
+        "pyncer/log": "^1.1.0",
+        "pyncer/snyppet": "^1.2.1",
         "sentry/sdk": "^4.0"
     },
     "autoload": {
