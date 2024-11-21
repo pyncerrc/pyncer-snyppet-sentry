@@ -17,7 +17,7 @@ class Snyppet extends BaseSnyppet
     /**
      * @inheritdoc
      */
-    protected function initializeMiddleware(string $class): PsrMiddlewareInterface|MiddlewareInterface
+    protected function forgeMiddleware(string $class): PsrMiddlewareInterface|MiddlewareInterface
     {
         if ($class === InitializeMiddleware::class) {
             return new $class(
