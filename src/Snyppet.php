@@ -33,6 +33,6 @@ class Snyppet extends BaseSnyppet
             );
         }
 
-        return parent::initializeMiddleware($class);
+        return parent::forgeMiddleware($class);
     }
 }
